@@ -17,13 +17,13 @@ public class GameServiceImpl implements GameService {
         int betAmount = request.getBetAmount();
         List<List<String>> matrix = generateMatrix(config);
 
-        // Calculate applied winning combinations
+
         Map<String, List<String>> appliedWinningCombinations = calculateAppliedWinningCombinations(matrix, config);
 
-        // Calculate reward
+
         double reward = calculateReward(matrix, betAmount, config, appliedWinningCombinations);
 
-        // Apply bonus symbol only if there are winning combinations
+
         String appliedBonusSymbol = null;
         if (!appliedWinningCombinations.isEmpty()) {
             appliedBonusSymbol = calculateAppliedBonusSymbol(config);
@@ -55,7 +55,7 @@ public class GameServiceImpl implements GameService {
             matrix.add(row);
         }
 
-        // Randomly add bonus symbols
+
         int numberOfBonusSymbols = random.nextInt(columns * rows / 4); // Random number of bonus symbols to add
         for (int i = 0; i < numberOfBonusSymbols; i++) {
             int randomRow = random.nextInt(rows);
@@ -133,7 +133,7 @@ public class GameServiceImpl implements GameService {
         checkCombinations(matrix, config, appliedWinningCombinations, config.getWinCombinations().get("same_symbols_diagonally_left_to_right").getCoveredAreas(), "same_symbols_diagonally_left_to_right");
         checkCombinations(matrix, config, appliedWinningCombinations, config.getWinCombinations().get("same_symbols_diagonally_right_to_left").getCoveredAreas(), "same_symbols_diagonally_right_to_left");
 
-        // Check for same symbols count
+
         for (String symbol : config.getSymbols().keySet()) {
             long count = matrix.stream().flatMap(List::stream).filter(s -> s.equals(symbol)).count();
             for (Map.Entry<String, WinCombination> entry : config.getWinCombinations().entrySet()) {
